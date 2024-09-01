@@ -35,6 +35,7 @@ to do it with [lazy.nvim](https://github.com/folke/lazy.nvim):
     require("suno").setup()
   end
 }
+```
 
 ## Note 📝
 
