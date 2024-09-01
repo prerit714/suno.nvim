@@ -24,8 +24,13 @@ M.__is_a_supported_filetype = function(ext)
 	return false
 end
 
+-- Perform operations if cpp filetype is identified
+M.__handle_cpp = function()
+	-- TODO: Complete impl
+end
+
 -- Internal main function
-M._main = function()
+M.__main = function()
 	-- Get the filetype on which the :Suno command was spawned
 	local current_filetype = vim.bo.filetype
 	-- Check if it is supported currently
@@ -43,6 +48,14 @@ M._main = function()
 	end
 
 	print("[Suno] I am ready :)")
+
+	if current_filetype == "cpp" then
+		M.__handle_cpp()
+	else
+		-- TODO: Handle other filetypes
+		error("[Suno] Implementation for " .. current_filetype .. " is still in progress :)")
+		return
+	end
 end
 
 ---Setup function as per the requirement of lazy.nvim
@@ -55,7 +68,7 @@ M.setup = function(opts)
 	end
 
 	-- Make a neovim function to launch suno's main
-	vim.api.nvim_create_user_command(M.__SUNO, M._main, {
+	vim.api.nvim_create_user_command(M.__SUNO, M.__main, {
 		desc = "[Suno] Suno your current filetype!",
 	})
 end
