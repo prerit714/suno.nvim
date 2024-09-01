@@ -26,7 +26,16 @@ end
 
 -- Perform operations if cpp filetype is identified
 M.__handle_cpp = function()
-	-- TODO: Complete impl
+	local build_and_run_cpp = function()
+		local current_time = vim.fn.reltimefloat(vim.fn.reltime())
+		print("[Suno] I am running: " .. current_time)
+	end
+
+	vim.api.nvim_create_autocmd("BufWritePost", {
+		group = M.__SUNO,
+		pattern = "*.cpp",
+		callback = build_and_run_cpp,
+	})
 end
 
 -- Internal main function
@@ -70,6 +79,11 @@ M.setup = function(opts)
 	-- Make a neovim function to launch suno's main
 	vim.api.nvim_create_user_command(M.__SUNO, M.__main, {
 		desc = "[Suno] Suno your current filetype!",
+	})
+
+	-- Create an autocommand group for Suno
+	vim.api.nvim_create_augroup(M.__SUNO, {
+		clear = true,
 	})
 end
 
